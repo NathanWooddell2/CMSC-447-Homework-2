@@ -22,7 +22,7 @@ def display_all_students():
     database = resolve_db()
     gradebook = database.execute("Select * from gradbook").fetchall()
     database.close()
-    return render_template('Homepage.html', gradebook=gradebook)
+    return render_template('display.html', gradebook=gradebook)
 
 # A Function to display information on a student based on name
 @backend.route('/get_student_from_db/', methods = ["GET", "POST"])
