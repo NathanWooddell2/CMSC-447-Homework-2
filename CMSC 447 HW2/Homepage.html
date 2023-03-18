@@ -23,27 +23,83 @@
         <div class = "row">
 
             <div class = "col-sm-4">
-                <h4>Create User</h6>
+                <h4>Create User</h4>
+                <h6>By pressing the included button, you can create a user for the database.</h6>
                 <p>
-                    By pressing the included button, you can create a user for the database.
-                    ***INCLUDE A DESCRIPTION OF WHAT IS HAPPENING IN FLASK***
+                    The "GO" buttom makes an SQL statement of the format:
                 </p>
+                <p style = "font-style:italic">
+                    INSERT INTO gradebook (StudentName, StudentID, StudentScore)
+                </p>
+                <p>
+                    Please enter a full name for the name box, and the proper numbers into the provided number boxes
+                    there is currently no update function, so make sure your entries are correct.
+                </p>
+
+                <form method = "POST">
+                    <label for="Add_StudentName">Student Name:</label>
+                    <input type="text" 
+                        id="Add_StudentName" 
+                        name="Add_StudentName" 
+                        placeholder="Full Name"
+                        value ="{{request.form('StudentName')}}"><br>
+
+                    <label for="Add_StudentID">Student ID:</label><br>
+                    <input type="number" 
+                        id="Add_StudentID" 
+                        name="Add_StudentID" 
+                        placeholder="ID Number"
+                        value="{{request.from('StudentID')}}"><br>
+
+                    <label for="Add_StudentScore">Student Score:</label><br>
+                    <input type="number"
+                        id="Add_StudentScore" 
+                        name="Add_StudentScore" 
+                        placeholder="Student Score"
+                        value="{{request.form('StudentScore')}}"><br><br>
+
+                    <input type="submit" value="Add Student">
+                </form>
             </div>
 
             <div class = "col-sm-4">
-                <h4>Search User</h6>
+                <h4>Search User</h4>
+                <h6>By filling out the field, and pressing the required button you search the database for the specified player.</h6>
                 <p>
-                    By filling out the field, and pressing the required button you search the database for the specified player.
-                    ***INCLUDE A DESCRIPTION OF WHAT IS HAPPENING IN THE BACKGROUND***
+                    The "GO" buttom makes an SQL statement of the format:
                 </p>
+                <p style = "font-style:italic">
+                    SELECT * FROM gradebook WHERE StudentName = "Your_Input"
+                </p>
+                <p>
+                    To search for a student's information please enter the full name as it appears in the system. This will return
+                    all information about the student.
+                </p>
+
+                <form action="{{ url_for('get_student_from_db') }}" method = "post">
+                    <label for="Ret_StudentName">Student Name:</label><br>
+                    <input type="text" id="Ret_StudentName" name="Ret_StudentName" placeholder="Full Name"><br><br>
+                    <input type="submit" value="Search For Student">
+                </form>
             </div>
 
             <div class = "col-sm-4">
-                <h4>Delete User</h6>
+                <h4>Delete User</h4>
+                <h6>By filling out the field, and pressing the following button you may delete a specified user from the database.</h6>
                 <p>
-                    By filling out the field, and pressing the following button you may delete a specified user from the database.
-                    ***INCLUDE A DESCRIPTION OF WHAT IS HAPPENING ON THE BACKEND***
+                    The "GO" button makes an SQL statement of the format:
                 </p>
+                <p style = "font-style:italic">
+                    DELETE FROM gradebook WHERE StudentName = "Your_Input"             
+                </p>
+                <p>
+                    Please enter a full student name that exists in the system. This will permanently delete the
+                    student from the system. This action cannot be undone.
+                </p>
+                <form method = "post">
+                    <label for="Del_StudentName">Student Name:</label><br>
+                    <input type="text" id="Del_StudentName" name="Del_StudentName" placeholder="Full Name"><br><br>
+                    <input type="submit" value="Delete Student">
             </div>
 
         </div>
@@ -53,6 +109,7 @@
         <H2>View your search results below</H2>
         <H5>Below this point on the page you should see </H5>
     </div>
+
 
 </body>
 </html>

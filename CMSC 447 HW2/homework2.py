@@ -16,6 +16,13 @@ def resolve_db():
     database.row_factory = sqlite3.Row
     return database
 
+# This displays all students in the system
+@backend.route('/')
+def display_all_students():
+    database = resolve_db()
+    gradebook = database.execute("Select * from gradbook").fetchall()
+    database.close()
+    return render_template('Homepage.html', gradebook=gradebook)
 
 # A Function to display information on a student based on name
 @backend.route('/get_student_from_db/', methods = ["GET", "POST"])
@@ -36,6 +43,7 @@ def get_student_from_db():
 # A function to delete a selected student based on a provided ID
 @backend.route('/remove_student_from_db/', methods = ["GET", "POST"])
 def remove_student_from_db():
+    
     if request.method == 'POST':
         StudentName = request.form["Del_StudentName"]
 
@@ -76,4 +84,4 @@ def add_student_to_db():
         database.commit()
         database.close()
 
-    return # There may not need to be a return
+    return render_template('Homepage.html')
