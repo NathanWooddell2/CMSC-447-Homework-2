@@ -31,5 +31,14 @@
             <a href="{{url_for('get_student_from_db')}}">Retrieve Information</a>
         </nav>
     </div>
-    
+
+    {% block content %}
+        <h1>{% block title %} Students {% end block %}</h1>
+        {% for Student in gradebook %}
+            <div class='student'>
+                <H6>{{ student ['StudentName']}}</H6>
+                <p>{{ student ['StudentID']}}</p>
+                <p>{{ student ['StudentScore']}}</p>
+            </div>
+
 </body>

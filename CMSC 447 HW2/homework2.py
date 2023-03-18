@@ -20,9 +20,9 @@ def resolve_db():
 @backend.route('/')
 def display_all_students():
     database = resolve_db()
-    gradebook = database.execute("Select * from gradbook").fetchall()
+    gradebook = database.execute("Select * from gradebook").fetchall()
     database.close()
-    return render_template('display.html', gradebook=gradebook)
+    return render_template('Homepage.html', gradebook=gradebook)
 
 # A Function to display information on a student based on name
 @backend.route('/get_student_from_db/', methods = ["GET", "POST"])
@@ -36,8 +36,9 @@ def get_student_from_db():
 
     else:
         database = resolve_db()
-        database.execute("SELECT * FROM gradebook WHERE StudentName = ?",
+        gradebook = database.execute("SELECT * FROM gradebook WHERE StudentName = ?",
                         (StudentName)).fetchone()
+        return render_template('Homepage.html', gradebook=gradebook)
 
 
 # A function to delete a selected student based on a provided ID
@@ -54,10 +55,11 @@ def remove_student_from_db():
     # Executes the delete command based on the StudentName argument
     else:
         database = resolve_db()
-        database.execute("DELETE FROM gradebook WHERE StudentName=?",
+        gradebook = database.execute("DELETE FROM gradebook WHERE StudentName=?",
                         (StudentName)).fetchone()
         database.commit()
         database.close()
+        return render_template('Homepage.html', gradebook=gradebook)
 
 
 # A funtion to add a student to the database, must provide all information
